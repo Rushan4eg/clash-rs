@@ -46,11 +46,10 @@ redundant_clone = "deny"
 needless_collect = "deny"
 
 [patch.crates-io]
-# TEMPORARY, do not merge as is: points at the branch of
-# https://github.com/Watfaq/rustls/pull/11, which adds the ClientHello
-# shaping API this feature is built on. Revert to
-#   { git = "https://github.com/Watfaq/rustls.git", branch = "watfaq/0.23.40" }
-# once that PR lands.
+# Our fork of Watfaq/rustls, branched from watfaq/0.23.40. It adds the
+# ClientHello shaping this fork is built on - GREASE, verbatim extensions, a
+# dictated cipher list - none of which upstream rustls has an interest in.
+# Track watfaq/0.23.40 there when it moves.
 rustls = { git = "https://github.com/Rushan4eg/rustls.git", branch = "watfaq/utls" }
 tokio-rustls = { git = "https://github.com/Watfaq/tokio-rustls.git", branch = "watfaq/0.26.4" }
 shadowquic-macros = { git = "https://github.com/spongebob888/shadowquic.git", rev = "295034e1b6478706a4348565bfc3ecea8378da98" }
