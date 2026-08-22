@@ -2,22 +2,13 @@ name: Build only
 
 # Собирает бинарь и ничего больше.
 #
-# Основной ci.yml на форке не запускается вовсе: в нём есть job релиза и
-# публикации в docker, которым нужны секреты и права апстрима, и GitHub роняет
-# весь запуск ещё до первого шага. Отлаживать чужой релизный конвейер ради
-# одного бинаря смысла нет - здесь только сборка.
-#
-# Цели берутся из target-mips.toml, а не из общего target.toml: собирать два
-# десятка платформ, когда нужна одна, значит ждать полчаса вместо пяти минут.
+# Основной ci.yml на форке не запускается: в нём есть job релиза и публикации
+# в docker, которым нужны права апстрима. Здесь только сборка, и только под ту
+# платформу, которая нужна - собирать два десятка целей ради одной значит
+# ждать полчаса вместо пяти минут.
 
 on:
   workflow_dispatch:
-    inputs:
-      target-config-file:
-        description: "Какие цели собирать"
-        required: false
-        default: ".github/target-mips.toml"
-        type: string
 
 jobs:
   build:
@@ -26,7 +17,7 @@ jobs:
     with:
       rust-toolchain: "stable"
       packages: "clash-rs"
-      target-config-file: ${{ inputs.target-config-file }}
+      target-config-file: ".github/target-mips.toml"
       rustflags: ""
       enable-tmate: false
       enable-sccache: true
